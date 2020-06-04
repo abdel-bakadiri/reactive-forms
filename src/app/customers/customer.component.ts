@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { NgForm, FormGroup, FormControl } from "@angular/forms";
 
 import { Customer } from "./customer";
 
@@ -9,14 +9,35 @@ import { Customer } from "./customer";
   styleUrls: ["./customer.component.css"],
 })
 export class CustomerComponent implements OnInit {
+  customerRootFormGroup: FormGroup;
+
+  emailControl = new FormControl();
+
   customer = new Customer();
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.customerRootFormGroup = new FormGroup({
+      firstName: new FormControl(),
+      lastName: new FormControl(),
+      email: this.emailControl,
+      sendCatalogue: new FormControl(true),
+    });
+  }
 
-  save(customerForm: NgForm) {
-    console.log(customerForm.form);
-    console.log("Saved: " + JSON.stringify(customerForm.value));
+  save() {}
+  onSetSomeValue() {
+    this.customerRootFormGroup.patchValue({
+      lastName: "Abdel",
+    });
+  }
+  onSetAllValue() {
+    this.customerRootFormGroup.setValue({
+      firstName: "abdel",
+      lastName: "abdou",
+      email: "abdel@gmail.com",
+      sendCatalogue: true,
+    });
   }
 }
