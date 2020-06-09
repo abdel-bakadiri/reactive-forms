@@ -89,15 +89,16 @@
             formControlName="email"
             [ngClass]="{
               'is-invalid':
-                (emailControl.touched || emailControl.dirty) &&
-                !emailControl.valid
+                (customerRootFormGroup.get('email').touched ||
+                  customerRootFormGroup.get('email').dirty) &&
+                !customerRootFormGroup.get('email').valid
             }"
           />
           <span class="invalid-feedback">
-            <span *ngIf="emailControl.errors?.required">
+            <span *ngIf="customerRootFormGroup.get('email').errors?.required">
               Please enter your email address.
             </span>
-            <span *ngIf="emailControl.errors?.email">
+            <span *ngIf="customerRootFormGroup.get('email').errors?.email">
               Please enter a valid email address.
             </span>
           </span>
