@@ -1,0 +1,155 @@
+{
+  "rootTopicKey": "b1200b3d-8411-433a-b7c4-b9a82044d672",
+  "editorRootTopicKey": "b1200b3d-8411-433a-b7c4-b9a82044d672",
+  "focusKey": "b1200b3d-8411-433a-b7c4-b9a82044d672",
+  "extData": {},
+  "topics": [
+    {
+      "key": "b1200b3d-8411-433a-b7c4-b9a82044d672",
+      "parentKey": null,
+      "subKeys": [
+        "8116fc55-3d54-4517-bc5c-14eb8066db0e",
+        "1d1d2de4-0fd0-4453-91e0-2e77938f8488"
+      ],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "Reactive form\n(creation formGroup and formControls)"
+        }
+      ]
+    },
+    {
+      "key": "8116fc55-3d54-4517-bc5c-14eb8066db0e",
+      "parentKey": "b1200b3d-8411-433a-b7c4-b9a82044d672",
+      "subKeys": [
+        "a60c3116-d88d-46d6-9a7b-0912dcd90281",
+        "7b32d0f4-f654-4982-8a1d-82570abffadc"
+      ],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "Without validators"
+        }
+      ]
+    },
+    {
+      "key": "1d1d2de4-0fd0-4453-91e0-2e77938f8488",
+      "parentKey": "b1200b3d-8411-433a-b7c4-b9a82044d672",
+      "subKeys": [
+        "d19fc7bc-ce94-4f6a-a131-14aa1ed045bc",
+        "2a0db192-5570-4e67-8490-d6668e19efe4"
+      ],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "With validators"
+        }
+      ]
+    },
+    {
+      "key": "a60c3116-d88d-46d6-9a7b-0912dcd90281",
+      "parentKey": "8116fc55-3d54-4517-bc5c-14eb8066db0e",
+      "subKeys": [],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "this.formGroupName = this.formBuilder.group({\nformControlName1: initialValueOfFormControl1,\nformControlName2: initialValueOfFormControl2,\n})"
+        }
+      ]
+    },
+    {
+      "key": "7b32d0f4-f654-4982-8a1d-82570abffadc",
+      "parentKey": "8116fc55-3d54-4517-bc5c-14eb8066db0e",
+      "subKeys": [],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "this.formGroupName = this.formBuilder.group({\nformControlName1:{value: initialValueOfFormControl1, disabled: true/false,\nformControlName2:{ value: initialValueOfFormControl2, disabled: true/false\n}\n})"
+        }
+      ]
+    },
+    {
+      "key": "d19fc7bc-ce94-4f6a-a131-14aa1ed045bc",
+      "parentKey": "1d1d2de4-0fd0-4453-91e0-2e77938f8488",
+      "subKeys": [],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "this.formGroupName = this.formBuilder.group({\nformControlName1: [initialValueOfFormControl1, Validators.required]\n...\n})"
+        }
+      ]
+    },
+    {
+      "key": "2a0db192-5570-4e67-8490-d6668e19efe4",
+      "parentKey": "1d1d2de4-0fd0-4453-91e0-2e77938f8488",
+      "subKeys": [],
+      "collapse": false,
+      "style": null,
+      "blocks": [
+        {
+          "type": "CONTENT",
+          "data": "this.formGroupName = this.formBuilder.group({\nformControlName1: [initialValueOfFormControl1,\n [Validators.required, Validators.minLength(3), ...]\n]\n...\n})"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "readOnly": false,
+    "allowUndo": true,
+    "layoutDir": 0,
+    "theme": {
+      "name": "default",
+      "randomColor": true,
+      "background": "rgb(57,60,65)",
+      "highlightColor": "#50C9CE",
+      "marginH": 60,
+      "marginV": 20,
+      "contentStyle": {
+        "lineHeight": "1.5",
+        "fontSize": "16px"
+      },
+      "linkStyle": {
+        "lineRadius": 5,
+        "lineType": "curve",
+        "lineWidth": "3px"
+      },
+      "rootTopic": {
+        "contentStyle": {
+          "fontSize": "36px"
+        },
+        "subLinkStyle": {
+          "lineType": "curve",
+          "lineWidth": "3px"
+        }
+      },
+      "primaryTopic": {
+        "contentStyle": {
+          "fontSize": "24px"
+        },
+        "subLinkStyle": {
+          "lineType": "curve",
+          "lineWidth": "3px"
+        }
+      },
+      "normalTopic": {
+        "subLinkStyle": {
+          "lineType": "curve",
+          "lineWidth": "3px"
+        }
+      }
+    }
+  },
+  "formatVersion": null
+}

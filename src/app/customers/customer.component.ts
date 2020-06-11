@@ -1,5 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { NgForm, FormGroup, FormControl, FormBuilder } from "@angular/forms";
+import {
+  NgForm,
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+  MaxLengthValidator,
+} from "@angular/forms";
 
 import { Customer } from "./customer";
 
@@ -19,9 +26,14 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit() {
     this.customerRootFormGroup = this.formBuilder.group({
-      firstName: { value: "n/a", disabled: true },
-      lastName: "",
-      email: "",
+      firstName: [
+        { value: "n/a", disabled: false },
+        [Validators.required, Validators.minLength(3)],
+      ],
+      lastName: ["", [Validators.required, Validators.maxLength(50)]],
+      email: ["", [Validators.required, Validators.email]],
+      phone: "",
+      notification: "email",
       sendCatalogue: true,
     });
     // this.customerRootFormGroup = new FormGroup({
@@ -45,5 +57,14 @@ export class CustomerComponent implements OnInit {
       email: "abdel@gmail.com",
       sendCatalogue: true,
     });
+  }
+  sendNotification(notification: string): void {
+    const phoneControl = this.customerRootFormGroup.get("phone");
+    if (notification === "phone") {
+      phoneControl.setValidators([Validators.required]);
+    } else {
+      phoneControl.clearValidators();
+    }
+    phoneControl.updateValueAndValidity();
   }
 }

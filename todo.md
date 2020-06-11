@@ -1,7 +1,7 @@
-## Change template driven form to reactive form
+## use a built-in validators in ts file instead html
 
-## put a default value for some input element
+## add a select button to select text or phone and if phone is selected than set the input phone as required
 
-## add a button to put a wanted values for all input element
+##
 
-## use formBuild service to use reactive form
+##
