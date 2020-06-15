@@ -1,14 +1,13 @@
+import { ratingParms, matchEmail } from "./../custom-validators";
 import { Component, OnInit } from "@angular/core";
 import {
-  NgForm,
-  FormGroup,
-  FormControl,
   FormBuilder,
+  FormControl,
+  FormGroup,
   Validators,
-  MaxLengthValidator,
 } from "@angular/forms";
-
 import { Customer } from "./customer";
+import { rating } from "../custom-validators";
 
 @Component({
   selector: "app-customer",
@@ -31,9 +30,16 @@ export class CustomerComponent implements OnInit {
         [Validators.required, Validators.minLength(3)],
       ],
       lastName: ["", [Validators.required, Validators.maxLength(50)]],
-      email: ["", [Validators.required, Validators.email]],
+      emailGroup: this.formBuilder.group(
+        {
+          email: ["", [Validators.required, Validators.email]],
+          emailConfirmation: ["", Validators.required],
+        },
+        { validators: matchEmail("email", "emailConfirmation") }
+      ),
       phone: "",
       notification: "email",
+      rating: [null, [Validators.required, ratingParms(0, 5)]],
       sendCatalogue: true,
     });
     // this.customerRootFormGroup = new FormGroup({

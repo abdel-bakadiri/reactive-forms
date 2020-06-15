@@ -71,31 +71,90 @@
         </div>
       </div>
 
-      <div class="form-group row mb-2">
-        <label class="col-md-2 col-form-label" for="emailId">Email</label>
-        <div class="col-md-8">
-          <input
-            class="form-control"
-            id="emailId"
-            type="email"
-            placeholder="Email (required)"
-            name="email"
-            formControlName="email"
-            [ngClass]="{
-              'is-invalid':
-                (customerRootFormGroup.get('email').touched ||
-                  customerRootFormGroup.get('email').dirty) &&
-                !customerRootFormGroup.get('email').valid
-            }"
-          />
-          <span class="invalid-feedback">
-            <span *ngIf="customerRootFormGroup.get('email').errors?.required">
-              Please enter your email address.
+      <div formGroupName="emailGroup">
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="emailId">Email</label>
+          <div class="col-md-8">
+            <input
+              class="form-control"
+              id="emailId"
+              type="email"
+              placeholder="Email (required)"
+              name="email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid':
+                  customerRootFormGroup.get('emailGroup').errors?.match ||
+                  ((customerRootFormGroup.get('emailGroup.email').touched ||
+                    customerRootFormGroup.get('emailGroup.email').dirty) &&
+                    !customerRootFormGroup.get('emailGroup.email').valid)
+              }"
+            />
+            <span class="invalid-feedback">
+              <span
+                *ngIf="
+                  customerRootFormGroup.get('emailGroup.email').errors?.required
+                "
+              >
+                Please enter your email address.
+              </span>
+              <span
+                *ngIf="
+                  customerRootFormGroup.get('emailGroup.email').errors?.email
+                "
+              >
+                Please enter a valid email address.
+              </span>
             </span>
-            <span *ngIf="customerRootFormGroup.get('email').errors?.email">
-              Please enter a valid email address.
+          </div>
+        </div>
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="emailId"
+            >Confirmation email</label
+          >
+          <div class="col-md-8">
+            <input
+              class="form-control"
+              id="emailConfirmationId"
+              type="email"
+              placeholder="Email confirmation (required)"
+              formControlName="emailConfirmation"
+              [ngClass]="{
+                'is-invalid':
+                  customerRootFormGroup.get('emailGroup').errors?.match ||
+                  ((customerRootFormGroup.get('emailGroup.emailConfirmation')
+                    .touched ||
+                    customerRootFormGroup.get('emailGroup.emailConfirmation')
+                      .dirty) &&
+                    !customerRootFormGroup.get('emailGroup.emailConfirmation')
+                      .valid)
+              }"
+            />
+            <span class="invalid-feedback">
+              <span
+                *ngIf="
+                  customerRootFormGroup.get('emailGroup.emailConfirmation')
+                    .errors?.required
+                "
+              >
+                Please enter your email address.
+              </span>
+              <span
+                *ngIf="
+                  customerRootFormGroup.get('emailGroup.emailConfirmation')
+                    .errors?.email
+                "
+              >
+                Please enter a valid email address.
+              </span>
+              <span
+                *ngIf="customerRootFormGroup.get('emailGroup').errors?.match"
+              >
+                the confirmation email don't match the email
+              </span>
             </span>
-          </span>
+          </div>
         </div>
       </div>
 
@@ -148,6 +207,33 @@
               />Phone
             </label>
           </div>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label" for="ratingId">Rating</label>
+        <div class="col-md-8">
+          <input
+            class="form-control"
+            id="ratingId"
+            type="number"
+            placeholder="Rating (required)"
+            formControlName="rating"
+            [ngClass]="{
+              'is-invalid':
+                (customerRootFormGroup.get('rating').touched ||
+                  customerRootFormGroup.get('rating').dirty) &&
+                !customerRootFormGroup.get('rating').valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="customerRootFormGroup.get('rating').errors?.required">
+              Please enter your rating evaluation.
+            </span>
+            <span *ngIf="customerRootFormGroup.get('rating').errors?.rang">
+              Please enter a rang between 0 and 5.
+            </span>
+          </span>
         </div>
       </div>
 
