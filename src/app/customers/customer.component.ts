@@ -1,18 +1,19 @@
-import { ratingParms, matchEmail } from "./../custom-validators";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
-} from "@angular/forms";
-import { Customer } from "./customer";
-import { rating } from "../custom-validators";
+} from '@angular/forms';
+import { matchEmail, ratingParms } from './../custom-validators';
+import { Customer } from './customer';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: "app-customer",
-  templateUrl: "./customer.component.html",
-  styleUrls: ["./customer.component.css"],
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.css'],
 })
 export class CustomerComponent implements OnInit {
   customerRootFormGroup: FormGroup;
@@ -21,52 +22,73 @@ export class CustomerComponent implements OnInit {
 
   customer = new Customer();
 
+  messageError: string;
+
+  private validationMessages = {
+    required: 'Please enter your email Adresse',
+    email: 'Please enter a valid mail adresse',
+  };
+
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.customerRootFormGroup = this.formBuilder.group({
       firstName: [
-        { value: "n/a", disabled: false },
+        { value: 'n/a', disabled: false },
         [Validators.required, Validators.minLength(3)],
       ],
-      lastName: ["", [Validators.required, Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.maxLength(50)]],
       emailGroup: this.formBuilder.group(
         {
-          email: ["", [Validators.required, Validators.email]],
-          emailConfirmation: ["", Validators.required],
+          email: ['', [Validators.required, Validators.email]],
+          emailConfirmation: ['', Validators.required],
         },
-        { validators: matchEmail("email", "emailConfirmation") }
+        { validators: matchEmail('email', 'emailConfirmation') }
       ),
-      phone: "",
-      notification: "email",
+      phone: '',
+      notification: 'email',
       rating: [null, [Validators.required, ratingParms(0, 5)]],
       sendCatalogue: true,
     });
-    // this.customerRootFormGroup = new FormGroup({
-    //   firstName: new FormControl(),m
-    //   lastName: new FormControl(),
-    //   email: this.emailControl,
-    //   sendCatalogue: new FormControl(true),
-    // });
+    this.customerRootFormGroup
+      .get('notification')
+      .valueChanges.subscribe((notification) => {
+        this.sendNotification(notification);
+      });
+
+    const emailControl = this.customerRootFormGroup.get('emailGroup.email');
+
+    emailControl.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(() => this.setMessageError(emailControl));
   }
 
   save() {}
+
+  setMessageError(c: AbstractControl): void {
+    this.messageError = '';
+    if ((c.touched || c.dirty) && c.errors) {
+      this.messageError = Object.keys(c.errors)
+        .map((key) => this.validationMessages[key])
+        .join(' ');
+    }
+  }
   onSetSomeValue() {
     this.customerRootFormGroup.patchValue({
-      lastName: "Abdel",
+      lastName: 'Abdel',
     });
   }
   onSetAllValue() {
     this.customerRootFormGroup.setValue({
-      firstName: "abdel",
-      lastName: "abdou",
-      email: "abdel@gmail.com",
+      firstName: 'abdel',
+      lastName: 'abdou',
+      email: 'abdel@gmail.com',
       sendCatalogue: true,
     });
   }
   sendNotification(notification: string): void {
-    const phoneControl = this.customerRootFormGroup.get("phone");
-    if (notification === "phone") {
+    const phoneControl = this.customerRootFormGroup.get('phone');
+    if (notification === 'phone') {
       phoneControl.setValidators([Validators.required]);
     } else {
       phoneControl.clearValidators();

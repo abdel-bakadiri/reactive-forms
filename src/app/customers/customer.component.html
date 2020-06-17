@@ -84,26 +84,21 @@
               formControlName="email"
               [ngClass]="{
                 'is-invalid':
-                  customerRootFormGroup.get('emailGroup').errors?.match ||
-                  ((customerRootFormGroup.get('emailGroup.email').touched ||
-                    customerRootFormGroup.get('emailGroup.email').dirty) &&
+                  messageError ||
+                  (customerRootFormGroup.get('emailGroup.email').touched &&
                     !customerRootFormGroup.get('emailGroup.email').valid)
               }"
             />
             <span class="invalid-feedback">
+              <span *ngIf="messageError"></span>
+              {{ messageError }}
               <span
                 *ngIf="
-                  customerRootFormGroup.get('emailGroup.email').errors?.required
+                  customerRootFormGroup.get('emailGroup.email').touched &&
+                  !customerRootFormGroup.get('emailGroup.email').valid
                 "
               >
-                Please enter your email address.
-              </span>
-              <span
-                *ngIf="
-                  customerRootFormGroup.get('emailGroup.email').errors?.email
-                "
-              >
-                Please enter a valid email address.
+                Email is required
               </span>
             </span>
           </div>
@@ -121,32 +116,12 @@
               placeholder="Email confirmation (required)"
               formControlName="emailConfirmation"
               [ngClass]="{
-                'is-invalid':
-                  customerRootFormGroup.get('emailGroup').errors?.match ||
-                  ((customerRootFormGroup.get('emailGroup.emailConfirmation')
-                    .touched ||
-                    customerRootFormGroup.get('emailGroup.emailConfirmation')
-                      .dirty) &&
-                    !customerRootFormGroup.get('emailGroup.emailConfirmation')
-                      .valid)
+                'is-invalid': messageError
               }"
             />
             <span class="invalid-feedback">
-              <span
-                *ngIf="
-                  customerRootFormGroup.get('emailGroup.emailConfirmation')
-                    .errors?.required
-                "
-              >
-                Please enter your email address.
-              </span>
-              <span
-                *ngIf="
-                  customerRootFormGroup.get('emailGroup.emailConfirmation')
-                    .errors?.email
-                "
-              >
-                Please enter a valid email address.
+              <span>
+                {{ messageError }}
               </span>
               <span
                 *ngIf="customerRootFormGroup.get('emailGroup').errors?.match"
@@ -168,10 +143,7 @@
             placeholder="Phone (required)"
             formControlName="phone"
             [ngClass]="{
-              'is-invalid':
-                (customerRootFormGroup.get('phone').touched ||
-                  customerRootFormGroup.get('phone').dirty) &&
-                !customerRootFormGroup.get('phone').valid
+              'is-invalid': !customerRootFormGroup.get('phone').valid
             }"
           />
           <span class="invalid-feedback">
@@ -192,7 +164,6 @@
                 type="radio"
                 value="email"
                 formControlName="notification"
-                (click)="sendNotification('email')"
               />Email
             </label>
           </div>
@@ -203,7 +174,6 @@
                 type="radio"
                 value="phone"
                 formControlName="notification"
-                (click)="sendNotification('phone')"
               />Phone
             </label>
           </div>
