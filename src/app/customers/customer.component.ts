@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 import { matchEmail, ratingParms } from './../custom-validators';
 import { Customer } from './customer';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customer',
@@ -23,6 +24,10 @@ export class CustomerComponent implements OnInit {
   customer = new Customer();
 
   messageError: string;
+
+  get adresses(): FormArray {
+    return this.customerRootFormGroup.get('adresses') as FormArray;
+  }
 
   private validationMessages = {
     required: 'Please enter your email Adresse',
@@ -49,6 +54,7 @@ export class CustomerComponent implements OnInit {
       notification: 'email',
       rating: [null, [Validators.required, ratingParms(0, 5)]],
       sendCatalogue: true,
+      adresses: this.formBuilder.array([this.buildAdresses()]),
     });
     this.customerRootFormGroup
       .get('notification')
@@ -61,6 +67,17 @@ export class CustomerComponent implements OnInit {
     emailControl.valueChanges
       .pipe(debounceTime(1000))
       .subscribe(() => this.setMessageError(emailControl));
+  }
+
+  buildAdresses(): FormGroup {
+    return this.formBuilder.group({
+      addressType: 'home',
+      street1: '',
+      street2: '',
+      city: ['', Validators.required],
+      state: '',
+      zip: null,
+    });
   }
 
   save() {}
@@ -94,5 +111,9 @@ export class CustomerComponent implements OnInit {
       phoneControl.clearValidators();
     }
     phoneControl.updateValueAndValidity();
+  }
+
+  onClickAddOtherAdresse(): void {
+    this.adresses.push(this.buildAdresses());
   }
 }
